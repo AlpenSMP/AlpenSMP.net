@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlpenSMP – Dein Abenteuer. Deine Geschichte. Deine Community.</title>
+    <meta name="description" content="AlpenSMP – Deutschsprachiger Minecraft Survival Server mit aktiver Community. Erlebe gemeinsame Projekte und schreibe deine eigene Geschichte.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0c10;
+            --bg-secondary: #11151c;
+            --bg-card: rgba(20, 25, 35, 0.6);
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-primary: #f0f2f5;
+            --text-secondary: #a0a8b8;
+            --text-muted: #6b7280;
+            --accent: #5b9fd4;
+            --accent-hover: #7ab3e0;
+            --accent-glow: rgba(91, 159, 212, 0.4);
+            --success: #34d399;
+            --mountain-1: #1a2332;
+            --mountain-2: #243044;
+            --snow: rgba(255, 255, 255, 0.7);
+            --gradient-hero: linear-gradient(180deg, rgba(10,12,16,0.3) 0%, rgba(10,12,16,0.7) 50%, #0a0c10 100%);
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --nav-height: 72px;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            z-index: 1000;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-logo span {
+            background: linear-gradient(135deg, #5b9fd4, #8ec5f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #3b82f6, #5b9fd4) !important;
+            color: white !important;
+            font-weight: 600 !important;
+            padding: 10px 22px !important;
+            border-radius: 10px !important;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transition: all var(--transition) !important;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px var(--accent-glow);
+            background: linear-gradient(135deg, #4b92f6, #6bafd4) !important;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            right: 0;
+            background: rgba(10, 12, 16, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 24px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-glass);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 14px 16px;
+            border-radius: 10px;
+            transition: all var(--transition);
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding-top: var(--nav-height);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(180deg, rgba(10,12,16,0.2) 0%, rgba(10,12,16,0.6) 60%, #0a0c10 100%),
+                url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            background-attachment: fixed;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(10,12,16,0.4) 70%, #0a0c10 100%);
+            z-index: 1;
+        }
+
+        /* Mountains SVG layer for parallax */
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .mountains svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Snow particles */
+        #snow-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 900px;
+            padding: 0 24px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(12px);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s 0.2s forwards;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 10vw, 6.5rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.9s 0.3s forwards;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #e0f0ff 0%, #5b9fd4 50%, #8ec5f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-display);
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.9s 0.45s forwards;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.9s 0.55s forwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.9s 0.65s forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 32px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #5b9fd4);
+            color: white;
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(12px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-3px);
+        }
+
+        .server-ip-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(16px);
+            padding: 14px 24px;
+            border-radius: 14px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.9s 0.75s forwards;
+        }
+
+        .server-ip-box .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .server-ip-box .ip {
+            font-family: 'Outfit', monospace;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        .copy-btn {
+            background: rgba(91, 159, 212, 0.15);
+            border: 1px solid rgba(91, 159, 212, 0.3);
+            color: var(--accent);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(91, 159, 212, 0.25);
+        }
+
+        .copy-btn.copied {
+            background: rgba(52, 211, 153, 0.2);
+            border-color: rgba(52, 211, 153, 0.4);
+            color: var(--success);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== SECTIONS COMMON ===== */
+        section {
+            padding: 120px 24px;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .section-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* Reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== SERVER STATUS ===== */
+        .status-section {
+            padding: 0 24px 80px;
+            margin-top: -40px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .status-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 32px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .status-indicator {
+            width: 14px;
+            height: 14px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 16px var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        .status-info h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .status-info p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .status-right {
+            text-align: right;
+        }
+
+        .status-right .players {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            color: var(--text-primary);
+        }
+
+        .status-right .players span {
+            color: var(--accent);
+        }
+
+        .status-right .ip-small {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-family: monospace;
+        }
+
+        /* ===== ABOUT ===== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .about-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius);
+            padding: 40px 32px;
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(91, 159, 212, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .about-card:hover::before {
+            opacity: 1;
+        }
+
+        .about-card .icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(91,159,212,0.15), rgba(91,159,212,0.05));
+            border: 1px solid rgba(91,159,212,0.2);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+        }
+
+        .about-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .about-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        /* ===== FEATURES ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-sm);
+            padding: 32px 24px;
+            text-align: center;
+            transition: all var(--transition);
+            cursor: default;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(91,159,212,0.25);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+        }
+
+        .feature-card .icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover .icon {
+            transform: scale(1.15);
+        }
+
+        .feature-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== COMMUNITY ===== */
+        .community-section {
+            background: linear-gradient(180deg, transparent, rgba(20,30,50,0.4), transparent);
+        }
+
+        .community-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 56px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #5b9fd4, #8ec5f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* ===== JOIN ===== */
+        .join-section {
+            background: var(--bg-secondary);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+            counter-reset: step;
+        }
+
+        .step {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            position: relative;
+            transition: all var(--transition);
+        }
+
+        .step:hover {
+            transform: translateY(-6px);
+            border-color: rgba(91,159,212,0.25);
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            top: -16px;
+            left: 28px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #3b82f6, #5b9fd4);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        .step h4 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            margin-top: 12px;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        .join-ip {
+            margin-top: 60px;
+            text-align: center;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .join-ip h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .ip-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .ip-value {
+            font-family: 'Outfit', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.03em;
+            background: rgba(91,159,212,0.1);
+            padding: 14px 28px;
+            border-radius: 12px;
+            border: 1px solid rgba(91,159,212,0.25);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-list {
+            max-width: 800px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: all var(--transition);
+        }
+
+        .faq-item:hover {
+            border-color: rgba(255,255,255,0.12);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-align: left;
+            padding: 22px 28px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            transition: color var(--transition);
+        }
+
+        .faq-question:hover {
+            color: var(--accent);
+        }
+
+        .faq-question .arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .faq-item.open .faq-question .arrow {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer-inner {
+            padding: 0 28px 24px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #07090d;
+            border-top: 1px solid var(--border-glass);
+            padding: 80px 24px 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 48px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand h3 span {
+            background: linear-gradient(135deg, #5b9fd4, #8ec5f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            max-width: 280px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 64px;
+            flex-wrap: wrap;
+        }
+
+        .footer-col h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            transition: color var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-glass);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .steps {
+                grid-template-columns: 1fr;
+            }
+            .status-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 28px 24px;
+            }
+            .status-left {
+                flex-direction: column;
+            }
+            .status-right {
+                text-align: center;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            .stats-row {
+                gap: 32px;
+            }
+            .stat-number {
+                font-size: 2.4rem;
+            }
+            .footer-content {
+                flex-direction: column;
+            }
+            .footer-links {
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            section {
+                padding: 80px 20px;
+            }
+            .server-ip-box {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(20, 30, 40, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: var(--success);
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">ALPEN<span>SMP</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Über uns</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#join">Beitreten</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#join" class="nav-cta">SPIELEN</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Menü">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home">Home</a>
+        <a href="#about">Über uns</a>
+        <a href="#features">Features</a>
+        <a href="#community">Community</a>
+        <a href="#join">Beitreten</a>
+        <a href="#faq">FAQ</a>
+        <a href="#join" class="nav-cta" style="text-align:center;margin-top:8px;">SPIELEN</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-overlay"></div>
+        <canvas id="snow-canvas"></canvas>
+        
+        <div class="mountains">
+            <svg viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,400 L0,220 Q180,80 360,180 T720,120 T1080,200 T1440,100 L1440,400 Z" fill="#111820" opacity="0.9"/>
+                <path d="M0,400 L0,280 Q200,140 400,220 T800,160 T1200,240 T1440,180 L1440,400 Z" fill="#0d1218" opacity="0.95"/>
+                <path d="M0,400 L0,320 Q240,220 480,300 T960,250 T1440,310 L1440,400 Z" fill="#0a0c10"/>
+            </svg>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Deutschsprachiger Minecraft SMP
+            </div>
+            <h1>ALPEN<span>SMP</span></h1>
+            <p class="hero-tagline">Dein Abenteuer. Deine Geschichte. Deine Community.</p>
+            <p class="hero-desc">
+                Erlebe einen deutschsprachigen Minecraft-SMP mit einer aktiven Community, gemeinsamen Projekten und einer Welt, in der du deine eigene Geschichte schreiben kannst.
+            </p>
+            <div class="hero-buttons">
+                <a href="#join" class="btn btn-primary">
+                    JETZT SPIELEN
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#" class="btn btn-secondary" id="discordBtn">
+                    DISCORD BEITRETEN
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                </a>
+            </div>
+            <div class="server-ip-box">
+                <div>
+                    <div class="label">Server-IP</div>
+                    <div class="ip" id="serverIp">play.alpensmp.de</div>
+                </div>
+                <button class="copy-btn" id="copyIpBtn" onclick="copyIp()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Kopieren
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Server Status -->
+    <div class="status-section">
+        <div class="status-card reveal">
+            <div class="status-left">
+                <div class="status-indicator" id="statusDot"></div>
+                <div class="status-info">
+                    <h3>ALPENSMP SERVER</h3>
+                    <p id="statusText">🟢 ONLINE</p>
+                </div>
+            </div>
+            <div class="status-right">
+                <div class="players"><span id="playerCount">—</span> Spieler online</div>
+                <div class="ip-small" id="statusIp">play.alpensmp.de</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
+    <section id="about">
+        <div class="container">
+            <div class="reveal">
+                <span class="section-label">Über AlpenSMP</span>
+                <h2 class="section-title">Mehr als nur ein Server.</h2>
+                <p class="section-desc">
+                    AlpenSMP ist eine lebendige Community und eine gemeinsame Minecraft-Welt. Hier entstehen Geschichten, Freundschaften und beeindruckende Projekte – jeden Tag neu.
+                </p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card reveal reveal-delay-1">
+                    <div class="icon">🏔️</div>
+                    <h3>Survival</h3>
+                    <p>Eine gemeinsame Survival-Welt, in der Spieler ihre eigenen Projekte verwirklichen und die Landschaft gemeinsam gestalten können.</p>
+                </div>
+                <div class="about-card reveal reveal-delay-2">
+                    <div class="icon">👥</div>
+                    <h3>Community</h3>
+                    <p>Gemeinsam spielen, bauen, handeln und neue Leute kennenlernen. Hier zählt das Miteinander.</p>
+                </div>
+                <div class="about-card reveal reveal-delay-3">
+                    <div class="icon">📖</div>
+                    <h3>Deine Geschichte</h3>
+                    <p>Jeder Spieler kann seine eigene Geschichte auf dem Server schreiben – ob allein oder mit anderen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+        <div class="container">
+            <div class="reveal" style="text-align:center;">
+                <span class="section-label">Features</span>
+                <h2 class="section-title">Was dich erwartet</h2>
+                <p class="section-desc" style="margin:0 auto;">Alles, was einen hochwertigen Survival-Server ausmacht – und noch mehr.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal reveal-delay-1">
+                    <span class="icon">🏔️</span>
+                    <h4>Survival</h4>
+                    <p>Klassisches Survival-Erlebnis in einer großen, lebendigen Welt.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-2">
+                    <span class="icon">👥</span>
+                    <h4>Aktive Community</h4>
+                    <p>Spieler, die täglich online sind und gemeinsam Projekte starten.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-3">
+                    <span class="icon">🏠</span>
+                    <h4>Eigene Projekte</h4>
+                    <p>Baue Häuser, Städte oder ganze Reiche – deiner Kreativität sind keine Grenzen gesetzt.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-4">
+                    <span class="icon">⚔️</span>
+                    <h4>Abenteuer</h4>
+                    <p>Entdecke die Welt, erkunde Dungeons und erlebe spannende Momente.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <span class="icon">🛒</span>
+                    <h4>Handel & Wirtschaft</h4>
+                    <p>Handel mit anderen Spielern und baue dein eigenes Wirtschaftsimperium auf.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-1">
+                    <span class="icon">🌍</span>
+                    <h4>Große Welt</h4>
+                    <p>Eine weitläufige Map mit Platz für alle und unzählige Möglichkeiten.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-2">
+                    <span class="icon">🛡️</span>
+                    <h4>Moderation & Schutz</h4>
+                    <p>Faire Regeln und ein Team, das für eine angenehme Spielumgebung sorgt.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-3">
+                    <span class="icon">💬</span>
+                    <h4>Discord-Community</h4>
+                    <p>Bleib auch außerhalb des Spiels in Kontakt und plane gemeinsame Aktionen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community -->
+    <section class="community-section" id="community">
+        <div class="container">
+            <div class="community-content">
+                <div class="reveal">
+                    <span class="section-label">Community</span>
+                    <h2 class="section-title">Werde Teil der Community</h2>
+                    <p class="section-desc" style="margin:0 auto 40px;">
+                        Ob du alleine bauen möchtest, riesige Projekte starten willst oder einfach mit anderen Spielern Abenteuer erleben möchtest – bei AlpenSMP findest du deinen Platz.
+                    </p>
+                    <a href="#" class="btn btn-primary" id="discordBtn2">
+                        DISCORD BEITRETEN
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                    </a>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item reveal reveal-delay-1">
+                        <div class="stat-number" data-target="0">0</div>
+                        <div class="stat-label">Discord-Mitglieder</div>
+                    </div>
+                    <div class="stat-item reveal reveal-delay-2">
+                        <div class="stat-number" data-target="0">0</div>
+                        <div class="stat-label">Aktive Spieler</div>
+                    </div>
+                    <div class="stat-item reveal reveal-delay-3">
+                        <div class="stat-number" data-target="0">0</div>
+                        <div class="stat-label">Gemeinsame Projekte</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join -->
+    <section class="join-section" id="join">
+        <div class="container">
+            <div class="reveal" style="text-align:center;">
+                <span class="section-label">Beitreten</span>
+                <h2 class="section-title">Bereit für dein Abenteuer?</h2>
+                <p class="section-desc" style="margin:0 auto;">In wenigen Schritten bist du dabei. So einfach geht's:</p>
+            </div>
+            <div class="steps">
+                <div class="step reveal reveal-delay-1">
+                    <h4>Minecraft öffnen</h4>
+                    <p>Starte Minecraft Java Edition und warte, bis du im Hauptmenü bist.</p>
+                </div>
+                <div class="step reveal reveal-delay-2">
+                    <h4>Mehrspieler auswählen</h4>
+                    <p>Klicke auf „Mehrspieler“ und dann auf „Server hinzufügen“.</p>
+                </div>
+                <div class="step reveal reveal-delay-3">
+                    <h4>AlpenSMP hinzufügen</h4>
+                    <p>Gib die Server-IP ein und speichere den Server in deiner Liste.</p>
+                </div>
+                <div class="step reveal reveal-delay-4">
+                    <h4>Beitreten & losspielen</h4>
+                    <p>Verbinde dich und beginne dein Abenteuer in den Alpen!</p>
+                </div>
+            </div>
+            <div class="join-ip reveal">
+                <h3>Server-IP</h3>
+                <div class="ip-display">
+                    <div class="ip-value" id="joinIp">play.alpensmp.de</div>
+                    <button class="btn btn-primary" onclick="copyIp()" style="padding:14px 24px;">
+                        IP KOPIEREN
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="container">
+            <div class="reveal" style="text-align:center;">
+                <span class="section-label">FAQ</span>
+                <h2 class="section-title">Häufig gestellte Fragen</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        Wie kann ich AlpenSMP beitreten?
+                        <span class="arrow">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Öffne Minecraft, gehe zu Mehrspieler → Server hinzufügen und trage die Server-IP ein. Mit einem Klick auf „Beitreten“ bist du dabei. Die genaue Anleitung findest du im Bereich „Beitreten“.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-1">
+                    <button class="faq-question">
+                        Welche Minecraft-Version wird benötigt?
+                        <span class="arrow">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            AlpenSMP läuft auf der aktuellen stabilen Minecraft Java Edition. Wir empfehlen immer die neueste Version. Genaue Angaben findest du auf unserem Discord.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-2">
+                    <button class="faq-question">
+                        Brauche ich Discord?
+                        <span class="arrow">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Discord ist nicht zwingend erforderlich, wird aber stark empfohlen. Dort erhältst du Updates, kannst dich mit der Community austauschen und bekommst schnelle Hilfe.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-3">
+                    <button class="faq-question">
+                        Ist der Server kostenlos?
+                        <span class="arrow">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Ja, AlpenSMP ist komplett kostenlos spielbar. Es gibt keine Pay-to-Win-Elemente. Optionale Unterstützung der Serverkosten ist möglich, aber nicht nötig.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item reveal">
+                    <button class="faq-question">
+                        Kann ich mit Freunden spielen?
+                        <span class="arrow">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Natürlich! Lade deine Freunde ein – gemeinsam macht das Abenteuer noch mehr Spaß. Ihr könnt zusammen bauen, handeln und die Welt erkunden.
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-item reveal reveal-delay-1">
+                    <button class="faq-question">
+                        Wo bekomme ich Hilfe?
+                        <span class="arrow">↓</span>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Am besten im Discord-Server. Dort gibt es Support-Kanäle und ein freundliches Team sowie Community-Mitglieder, die gerne helfen.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>ALPEN<span>SMP</span></h3>
+                <p>Dein Abenteuer. Deine Geschichte. Deine Community.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <a href="#" id="footerDiscord">Discord</a>
+                    <a href="#">TikTok</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Rechtliches</h4>
+                    <a href="#">Regeln</a>
+                    <a href="#">Impressum</a>
+                    <a href="#">Datenschutz</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 AlpenSMP. Alle Rechte vorbehalten.</span>
+            <span>Made with ❤️ for the community</span>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">Server-IP kopiert!</div>
+
+    <script>
+        // ===== CONFIG – hier einfach austauschen =====
+        const CONFIG = {
+            serverIp: 'play.alpensmp.de',          // ← Server-IP hier ändern
+            discordUrl: '#',                       // ← Discord-Einladungslink hier einfügen
+            // Für echten Status später z.B. eine API wie mcsrvstat.us anbinden
+        };
+
+        // Apply config
+        document.getElementById('serverIp').textContent = CONFIG.serverIp;
+        document.getElementById('joinIp').textContent = CONFIG.serverIp;
+        document.getElementById('statusIp').textContent = CONFIG.serverIp;
+
+        // Discord links
+        document.querySelectorAll('#discordBtn, #discordBtn2, #footerDiscord').forEach(el => {
+            el.href = CONFIG.discordUrl;
+            if (CONFIG.discordUrl === '#') {
+                el.addEventListener('click', e => {
+                    e.preventDefault();
+                    alert('Discord-Link wird noch hinzugefügt.');
+                });
+            }
+        });
+
+        // ===== Navigation scroll effect =====
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // ===== Mobile menu =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // ===== Copy IP =====
+        function copyIp() {
+            navigator.clipboard.writeText(CONFIG.serverIp).then(() => {
+                const btn = document.getElementById('copyIpBtn');
+                btn.classList.add('copied');
+                btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Kopiert!`;
+                
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+                
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Kopieren`;
+                }, 2000);
+            });
+        }
+
+        // ===== FAQ accordion =====
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isOpen = item.classList.contains('open');
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+
+        // ===== Scroll reveal =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Animate numbers if present
+                    const num = entry.target.querySelector('.stat-number');
+                    if (num && !num.dataset.animated) {
+                        animateNumber(num);
+                        num.dataset.animated = 'true';
+                    }
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== Number animation =====
+        function animateNumber(el) {
+            const target = parseInt(el.dataset.target) || 0;
+            if (target === 0) {
+                el.textContent = '—';
+                return;
+            }
+            const duration = 1800;
+            const start = performance.now();
+            function update(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(ease * target).toLocaleString('de-DE');
+                if (progress < 1) requestAnimationFrame(update);
+                else el.textContent = target.toLocaleString('de-DE');
+            }
+            requestAnimationFrame(update);
+        }
+
+        // ===== Snow particles =====
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticles() {
+            particles = [];
+            const count = Math.min(80, Math.floor(window.innerWidth / 15));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 0.8,
+                    speed: Math.random() * 0.8 + 0.3,
+                    drift: Math.random() * 0.5 - 0.25,
+                    opacity: Math.random() * 0.5 + 0.3
+                });
+            }
+        }
+
+        function drawSnow() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255,255,255,${p.opacity})`;
+                ctx.fill();
+                p.y += p.speed;
+                p.x += p.drift;
+                if (p.y > canvas.height) {
+                    p.y = -5;
+                    p.x = Math.random() * canvas.width;
+                }
+                if (p.x > canvas.width) p.x = 0;
+                if (p.x < 0) p.x = canvas.width;
+            });
+            animationId = requestAnimationFrame(drawSnow);
+        }
+
+        resizeCanvas();
+        createParticles();
+        drawSnow();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createParticles();
+        });
+
+        // ===== Parallax on hero background =====
+        const heroBg = document.getElementById('heroBg');
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            if (scrolled < window.innerHeight) {
+                heroBg.style.transform = `translateY(${scrolled * 0.35}px)`;
+            }
+        });
+
+        // ===== Placeholder Server Status (ready for API) =====
+        // Beispiel für spätere Anbindung:
+        // async function fetchStatus() {
+        //     const res = await fetch(`https://api.mcsrvstat.us/3/${CONFIG.serverIp}`);
+        //     const data = await res.json();
+        //     if (data.online) {
+        //         document.getElementById('statusText').textContent = '🟢 ONLINE';
+        //         document.getElementById('playerCount').textContent = data.players.online;
+        //         document.getElementById('statusDot').style.background = '#34d399';
+        //     } else {
+        //         document.getElementById('statusText').textContent = '🔴 OFFLINE';
+        //         document.getElementById('playerCount').textContent = '0';
+        //         document.getElementById('statusDot').style.background = '#ef4444';
+        //     }
+        // }
+        // fetchStatus();
+        // setInterval(fetchStatus, 60000);
+
+        // Placeholder values
+        document.getElementById('playerCount').textContent = '—';
+        document.getElementById('statusText').textContent = '🟢 ONLINE';
+    </script>
+</body>
+</html>
